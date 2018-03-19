@@ -1,0 +1,80 @@
+import java.util.*;
+//Map映射： 1，HashMap 2，treeMap，
+//取出方式：1，keySet 2，EntrySet，（Entry是一种接口，定义在Map接口中，因为Entry是关系，只有在定义了Map对象后才有关系。其返回对象类型是Map.Entry<k，v>）
+class  student implements Comparable<student>
+{
+	private String name;
+	private int age;
+	student (String name,int age)
+	{
+		this.name=name;
+		this.age=age;
+		
+	}
+	public int compareTo(student s)
+	{
+		int num=new Integer(this.age).compareTo(new Integer(s.age));
+		if(num==0)
+		  return this.name.compareTo(s.name);
+		  return num;
+	}
+	public int hashCode()
+	{
+		return name.hashCode()+age*34;	
+	}
+	public boolean equals(Object obj)
+	{
+		if(!(obj instanceof student ))
+		
+			throw new ClassCastException("leixingbupipei");
+		
+		student s=(student)obj;
+		return this.name.equals(s.name)&&this.age==s.age;
+		
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public int getAge()
+	{
+		return age;
+	}
+	public String toString()
+	{
+		return name+":"+age;
+	}
+}
+
+class MapTestdemo
+{
+	public static void main(String[] args)
+	{
+     HashMap<student,String> hm=new HashMap<student,String>();
+   
+     hm.put(new student("lisi1",21),"beijing");
+     hm.put(new student("lisi2",22),"shnanghai");
+     hm.put(new student("lisi3",23),"wuhan");
+     hm.put(new student("lisi4",24),"huaiyang");
+	   //第一种取出方式keySet
+	   Set<student>keySet=hm.keySet();
+	   Iterator<student> it=keySet.iterator();
+	 while(it.hasNext())
+	  {
+		  student stu=it.next();
+	   	String addr=hm.get(stu);
+		  System.out.println(stu+".."+addr);
+	  }
+	   //第二种取出方法
+	  Set<Map.Entry<student,String>>entrySet=hm.entrySet();
+	 Iterator<Map.Entry<student,String>> iter=entrySet.iterator();
+	 while(iter.hasNext())
+	  {
+	     Map.Entry<student,String>me=iter.next();
+	     student stu=me.getKey();
+	     String addr=me.getValue();
+	     System.out.println(stu+"....."+addr);
+	  }
+	
+	}
+}
